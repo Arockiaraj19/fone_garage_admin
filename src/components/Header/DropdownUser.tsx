@@ -46,9 +46,9 @@ const DropdownUser = () => {
       >
         <span className="hidden text-right lg:block">
           <span className="block text-sm font-medium text-black dark:text-white">
-            {userData?.first_name?? userData?.mobile_number??""}
+            {userData?.mobileNumber}
           </span>
-          <span className="block text-xs">  {userData?.type=="admin"?"Admin":"Super Admin" }</span>
+          {/* <span className="block text-xs">  {userData?.type=="admin"?"Admin":"Super Admin" }</span> */}
         </span>
 
         <span className="h-12 w-12 rounded-full object-cover">
@@ -93,7 +93,7 @@ const DropdownUser = () => {
           dropdownOpen === true ? "block" : "hidden"
         }`}
       >
-        <ul className="flex flex-col gap-5 border-b border-stroke px-6 py-7.5 dark:border-strokedark">
+        {/* <ul className="flex flex-col gap-5 border-b border-stroke px-6 py-7.5 dark:border-strokedark">
           <li>
             <Link
               href={`/settings/${userData?._id}`}
@@ -121,7 +121,7 @@ const DropdownUser = () => {
           </li>
        
         
-        </ul>
+        </ul> */}
         <button onClick={async(e)=>{
           e.preventDefault();
          await localStorage.clear();

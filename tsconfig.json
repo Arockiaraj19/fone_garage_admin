@@ -21,6 +21,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/service/brand_model_size.service.js", "src/service/brand_model.service.js", "src/service/brand.service.js", "src/service/countries.service.js", "src/service/credentials.service.js", "src/service/customer.service.js", "src/service/device_type.service.js", "src/service/device.service.js", "src/service/state.service.js", "src/service/user.service.js"],
   "exclude": ["node_modules"]
 }

@@ -1,16 +1,39 @@
 "use client"
 import { axiosPrivate } from "@/helper/axiosPrivate";
 import useApi from "@/hooks/useApi";
+import { fetchDeviceTypes ,deleteDeviceType} from "@/service/device_type.service";
 import { Package } from "@/types/package";
 import moment from "moment";
+import { useState ,useEffect} from "react";
 import { toast } from "react-toastify";
 
-const CarBrandComponent = () => {
-  const { data, loading, error, setData } = useApi("/v1/car_brand");
+const DeviceTypeComponent = () => {
+  const [data, setData] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+      async function fetchData() {
+          try {
+              setLoading(true);
+              const result = await fetchDeviceTypes();
+              setData(result??[]);
+          } catch (error: any) {
+              setError(error);
+          } finally {
+              setLoading(false);
+          }
+      }
+
+      fetchData();
+
+      // Cleanup function
+      return () => { };
+  }, []);
   const removeCarBrand = async (id: string) => {
     try {
-      await axiosPrivate.delete(`/v1/car_brand/${id}`)
-setData(data.filter((e:any)=>e._id!=id));
+      await deleteDeviceType(id)
+setData(data.filter((e:any)=>e.id!=id));
       toast.success("Data deleted successfully");
 
 
@@ -48,14 +71,19 @@ setData(data.filter((e:any)=>e._id!=id));
                 </td>
                 <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
                   <p className="text-black dark:text-white">
-                    {moment(item.createdAt).format('YYYY-MM-DD')}
+                    {moment(item.createdAt.toDate()).format('YYYY-MM-DD')}
                   </p>
                 </td>
 
                 <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
                   <div className="flex items-center space-x-3.5">
+                  <button onClick={(e)=>{
+                      window.location.href=`/device/add?id=${item.id}&name=${item.name}`;
+                    }} className="hover:text-primary">
+                  Edit
+                    </button>
                     <button onClick={(e)=>{
-                      window.location.href=`/car/${item._id}`;
+                      window.location.href=`/device/${item.id}`;
                     }} className="hover:text-primary">
                       <svg
                         className="fill-current"
@@ -75,7 +103,7 @@ setData(data.filter((e:any)=>e._id!=id));
                         />
                       </svg>
                     </button>
-                    <button onClick={(e)=>removeCarBrand(item._id)} className="hover:text-primary">
+                    <button onClick={(e)=>removeCarBrand(item.id)} className="hover:text-primary">
                       <svg
                         className="fill-current"
                         width="18"
@@ -114,4 +142,4 @@ setData(data.filter((e:any)=>e._id!=id));
   );
 };
 
-export default CarBrandComponent;
+export default DeviceTypeComponent;

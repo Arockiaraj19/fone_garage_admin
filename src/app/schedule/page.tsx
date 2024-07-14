@@ -43,6 +43,9 @@ const SchedulePage = () => {
           params.userId = searchParams.get("id");
         }
       }
+      if(mode){
+        params.payment_mode=mode;
+      }
       if(scheduleStatus){
         params.schedule_status=scheduleStatus=="Accepted"?"Both":"S2D";
       }
@@ -85,18 +88,19 @@ const SchedulePage = () => {
   const [scheduleStatus, setScheduleStatus] = useState<any>(null);
   const [type, setType] = useState<any>(null);
   const [status, setStatus] = useState<any>(null);
+  const [mode, setPaymentMode] = useState<any>(null);
   const [time, setTime] = useState<any>(null);
   useEffect(() => {
 
     fetchData();
 
 
-  }, [currentPage, scheduleStatus, type, status, time]);
+  }, [currentPage, scheduleStatus, type, status, time,mode]);
   return (
     <DefaultLayout>
       <Breadcrumb pageName={searchParams.get("name") ? `${searchParams.get("name")} Schedule` : `Schedule`} />
       {
-        searchParams.get("type")&&searchParams.get("type") == "driver"?<></>:  <div className="w-full flex flex-row items-end justify-between my-5 gap-5">
+        searchParams.get("type")&&searchParams.get("type") == "driver"?<></>:  <div className="w-full grid grid-cols-4 gap-5">
         <Dropdown onSelect={(e) => {
           console.log("what is the onSelect");
           console.log(e);
@@ -112,6 +116,11 @@ const SchedulePage = () => {
           console.log(e);
           setTime(e);
         }} options={["Upcoming", "Past", "Today"]} title="Select time" heading="Time" selected={time ?? ""} />
+         <Dropdown onSelect={(e) => {
+          console.log("what is the onSelect");
+          console.log(e);
+          setPaymentMode(e);
+        }} options={['online', 'cash']} title="Select Payment Mode" heading="Payment Mode" selected={mode ?? ""} />
         <Dropdown onSelect={(e) => {
           console.log("what is the onSelect");
           console.log(e);
@@ -124,8 +133,9 @@ const SchedulePage = () => {
             setType(null);
             setStatus(null);
             setTime(null);
+            setPaymentMode(null);
           }}
-          className="inline-flex items-center justify-center rounded-md border border-primary px-10 py-4 text-center font-medium text-primary hover:bg-opacity-90 lg:px-8 xl:px-10"
+          className="inline-flex items-center justify-center rounded-md border border-primary h-10 w-30 mt-10 text-center font-medium text-primary hover:bg-opacity-90"
         >
           Clear
         </button>

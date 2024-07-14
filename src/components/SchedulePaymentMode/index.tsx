@@ -9,7 +9,7 @@ import * as Yup from 'yup';
 
 import { useParams, usePathname, useRouter } from "next/navigation";
 import { toast } from "react-toastify";
-const SchedulePaymentMode = ({ data }: { data: any }) => {
+const ApproveInformation = ({ data }: { data: any }) => {
     const router = useRouter();
     const pathname = usePathname();
     const submit = async () => {
@@ -17,12 +17,12 @@ const SchedulePaymentMode = ({ data }: { data: any }) => {
             return;
         }
         try {
-            const result = await axiosPrivate.put("/v1/schedule/payment", {
-
-                user_id: data.user_id._id.toString(), schedule_id: data._id.toString(), amount: data.
-                    payment
+            const result = await axiosPrivate.put("/v1/user/approve", {
+                statusReason: "Good",
+                status: status,
+                userId: pathname.split("/")[(pathname.split("/").length - 1)]
             });
-            toast.success("Cash received successfully");
+            toast.success("Status updated successfully");
             router.refresh();
         } catch (error) {
 
@@ -33,14 +33,10 @@ const SchedulePaymentMode = ({ data }: { data: any }) => {
         <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
             <div className="border-b border-stroke px-7 py-4 dark:border-strokedark">
                 <h3 className="font-medium text-black dark:text-white">
-                Schedule Payment Approval
+                    Approval Information
                 </h3>
             </div>
             <div className="p-7">
-            <label className="mb-3 block text-sm font-medium text-black dark:text-white">
-      Notes
-      </label>
-                <p className="mb-3">{data?.note??""}</p>
                 <form action="#">
 
 
@@ -49,7 +45,7 @@ const SchedulePaymentMode = ({ data }: { data: any }) => {
                             console.log("what is the onselect");
                             console.log(e);
                             setStatus(e);
-                        }} options={[ 'approve']} selected={status} />
+                        }} options={['pending', 'approved', 'rejected']} selected={status} />
                     </div>
 
 
@@ -76,4 +72,4 @@ const SchedulePaymentMode = ({ data }: { data: any }) => {
 
 }
 
-export default SchedulePaymentMode;
+export default ApproveInformation;

@@ -15,6 +15,15 @@ const ScheduleTableItemCard = ({ item, index }: { item: any, index: number }) =>
                 {searchParams.get("type") && searchParams.get("type") == "driver" ? item?.schedule?.note ?? "" : item?.note ?? ""}
             </p>
         </td>
+        {
+             !searchParams.get("type") && <td onClick={(e)=>{
+                window.location.href = `/schedule/${item._id}`;
+             }} className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
+             <p className="text-black dark:text-white">
+                 { item?.payment_mode?? ""}
+             </p>
+         </td>
+        }
         <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
             <p className="text-black dark:text-white">
                 {searchParams.get("type") && searchParams.get("type") == "driver" ? moment(item?.schedule?.start_date).format('YYYY-MM-DD') : moment(item?.start_date).format('YYYY-MM-DD')} <br />

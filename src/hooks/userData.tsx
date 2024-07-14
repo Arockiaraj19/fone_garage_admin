@@ -1,7 +1,4 @@
 // hooks/useUserData.js
-
-
-import { axiosPrivate } from '@/helper/axiosPrivate';
 import { useEffect, useState } from 'react';
 
 
@@ -18,20 +15,6 @@ const useUserData = () => {
           console.log("what is the user result");
           console.log(JSON.parse(storedUserData));
           setUserData(JSON.parse(storedUserData));
-          setIsLoading(false);
-        } else {
-          // Fetch user data from API using Axios
-          const response = await axiosPrivate.get('/v1/user'); // Assuming you have an API route for user data
-          if (response.status === 200) {
-           
-            const userDataFromApi = response.data;
-            console.log("what is the user result");
-            console.log(userDataFromApi);
-            setUserData(userDataFromApi);
-            localStorage.setItem('userData', JSON.stringify(userDataFromApi));
-          } else {
-            console.error('Failed to fetch user data');
-          }
           setIsLoading(false);
         }
       } catch (error) {

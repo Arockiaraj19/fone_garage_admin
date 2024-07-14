@@ -1,5 +1,5 @@
 {
-  "name": "voom-admin-dashboard",
+  "name": "fone-admin",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -11,6 +11,8 @@
   "dependencies": {
     "apexcharts": "^3.45.2",
     "axios": "^1.6.8",
+    "bcryptjs": "^2.4.3",
+    "firebase": "^10.12.3",
     "flatpickr": "^4.6.13",
     "formik": "^2.4.5",
     "jsvectormap": "^1.5.3",

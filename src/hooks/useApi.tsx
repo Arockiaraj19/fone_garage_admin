@@ -1,6 +1,6 @@
 "use client"
 import { axiosPrivate } from '@/helper/axiosPrivate';
-import { baseUrl } from '@/helper/constants';
+
 import { useState, useEffect } from 'react';
 
 export default function useApi(url: string, method: string = 'GET', body: any = null) {

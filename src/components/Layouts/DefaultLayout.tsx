@@ -9,8 +9,8 @@ export default function DefaultLayout({
   children: React.ReactNode;
 }) {
   useEffect(()=>{
-    console.log(localStorage.getItem("session"));
-    if(localStorage.getItem("session")==null){
+ 
+    if(localStorage.getItem('userData')==null){
       window.location.href="/auth/signin";
 
     }

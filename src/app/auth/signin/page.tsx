@@ -8,15 +8,16 @@ import { useFormik } from "formik";
 import * as Yup from 'yup';
 import usePostApi from "@/hooks/usePostApi";
 import LoadingOverlay from "@/components/common/LoadingOverlay";
-import { axiosPrivate } from "@/helper/axiosPrivate";
+
 import { toast } from "react-toastify";
+import { addCredentials ,signIn} from "@/service/credentials.service";
 
 
 
 
 const SignIn: React.FC = () => {
   const [loading, setLoading] = useState(false);
-  const [selectedOption, setSelectedOption] = useState<string>("Super Admin");
+ 
   const formik = useFormik({
     initialValues: {
       password: '',
@@ -35,13 +36,13 @@ const SignIn: React.FC = () => {
 
       try {
         setLoading(true);
-        const result = await axiosPrivate.post('/v1/auth/admin/login', {
+       await signIn(values.number,values.password);
+        resetForm();
+        localStorage.setItem('userData', JSON.stringify({
           "mobileNumber": values.number,
           "password": values.password,
-          "type":selectedOption=="Admin"?"admin":'superAdmin'
-        });
-        resetForm();
-        localStorage.setItem("session", JSON.stringify(result.data));
+          
+        }));
 
         window.location.href = "/";
         setLoading(false);
@@ -197,7 +198,7 @@ const SignIn: React.FC = () => {
           <div className="w-full p-4 sm:p-12.5 xl:p-17.5">
 
             <h2 className="mb-9 text-2xl font-bold text-black dark:text-white sm:text-title-xl2">
-              Sign In to Voom Admin
+              Sign In to Fone Garage
             </h2>
 
             <form onSubmit={formik.handleSubmit}>
@@ -272,29 +273,7 @@ const SignIn: React.FC = () => {
                   </span>
                 </div>
               </div>
-              <div className="mb-5">
-              <label className="mb-2.5 block font-medium text-black dark:text-white">
-               Select Role
-                </label>
-                <select
-                  value={selectedOption}
-                  onChange={(e) => {
-                    setSelectedOption(e.target.value);
-                    
-                  }}
-                  className={`relative z-20 w-full appearance-none rounded border border-stroke bg-transparent px-4 py-3 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input  text-black dark:text-white
-                    }`}
-                >
-                
-                  <option value="Super Admin" className="text-body dark:text-bodydark">
-                   Super Admin
-                  </option>
-                  <option value="Admin" className="text-body dark:text-bodydark">
-                  Admin
-                  </option>
-                 
-                </select>
-              </div>
+             
               <div className="mb-5">
                 <input
                   type="submit"
