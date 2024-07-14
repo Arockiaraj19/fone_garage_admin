@@ -1,5 +1,5 @@
 import { db } from '@/helper/firebase';
-import { collection, query, where, getDocs, startAfter, limit, addDoc,updateDoc,doc, deleteDoc  } from 'firebase/firestore';
+import { collection, query, where, getDocs, startAfter, limit, addDoc, updateDoc, doc, deleteDoc } from 'firebase/firestore';
 const addState = async (stateData) => {
   try {
     const docRef = await addDoc(collection(db, 'states'), stateData);
@@ -12,9 +12,10 @@ const addState = async (stateData) => {
 };
 
 
-const fetchStates = async () => {
+const fetchStates = async (id) => {
   try {
-    const statesQuery = collection(db, 'states');
+    let statesQuery = collection(db, 'states');
+    statesQuery = query(statesQuery, where('countryId', '==', id));
     const querySnapshot = await getDocs(statesQuery);
 
     const states = querySnapshot.docs.map(doc => ({
@@ -51,3 +52,8 @@ const deleteState = async (stateId) => {
     throw new Error('Failed to delete state');
   }
 };
+
+
+export {
+  deleteState, updateState, addState, fetchStates
+}

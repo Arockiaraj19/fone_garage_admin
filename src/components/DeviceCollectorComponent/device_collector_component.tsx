@@ -7,10 +7,10 @@ import moment from "moment";
 import { useState ,useEffect} from "react";
 import { toast } from "react-toastify";
 import { usePathname, useSearchParams } from 'next/navigation'
-import { fetchCredentials,deleteCredentials } from "@/service/credentials.service";
+import { fetchUsers,deleteUser } from "@/service/user.service";
 
 
-const AdminComponent = () => {
+const DeviceCollectorComponent = () => {
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -19,7 +19,7 @@ const AdminComponent = () => {
       async function fetchData() {
           try {
               setLoading(true);
-              const result = await fetchCredentials();
+              const result = await fetchUsers();
               setData(result??[]);
           } catch (error: any) {
               setError(error);
@@ -35,7 +35,7 @@ const AdminComponent = () => {
   }, []);
   const removeCarBrand = async (id: string) => {
     try {
-      await deleteCredentials(id)
+      await deleteUser(id)
 setData(data.filter((e:any)=>e.id!=id));
       toast.success("Data deleted successfully");
 
@@ -52,9 +52,17 @@ setData(data.filter((e:any)=>e.id!=id));
           <thead>
             <tr className="bg-gray-2 text-left dark:bg-meta-4">
               <th className="min-w-[220px] px-4 py-4 font-medium text-black dark:text-white xl:pl-11">
-               Mobile Number
+                Name
               </th>
-            
+              <th className="min-w-[220px] px-4 py-4 font-medium text-black dark:text-white xl:pl-11">
+               Email
+              </th>
+              <th className="min-w-[220px] px-4 py-4 font-medium text-black dark:text-white xl:pl-11">
+           Mobile
+              </th>
+              <th className="min-w-[150px] px-4 py-4 font-medium text-black dark:text-white">
+                Created date
+              </th>
 
               <th className="px-4 py-4 font-medium text-black dark:text-white">
                 Actions
@@ -66,20 +74,32 @@ setData(data.filter((e:any)=>e.id!=id));
               <tr key={index}>
                 <td className="border-b border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11">
                   <h5 className="font-medium text-black dark:text-white">
+                    {item.name}
+                  </h5>
+
+                </td>
+                <td className="border-b border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11">
+                  <h5 className="font-medium text-black dark:text-white">
+                    {item.email}
+                  </h5>
+
+                </td>
+                <td className="border-b border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11">
+                  <h5 className="font-medium text-black dark:text-white">
                     {item.mobile}
                   </h5>
 
                 </td>
-               
+                <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
+                  <p className="text-black dark:text-white">
+                    {moment(item.createdAt.toDate()).format('YYYY-MM-DD')}
+                  </p>
+                </td>
 
                 <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
                   <div className="flex items-center space-x-3.5">
-                  <button onClick={(e)=>{
-                      window.location.href=`${pathname}/add?id=${item.id}&name=${item.mobile}`;
-                    }} className="hover:text-primary">
-                  Edit
-                    </button>
-                  
+                
+                   
                     <button onClick={(e)=>removeCarBrand(item.id)} className="hover:text-primary">
                       <svg
                         className="fill-current"
@@ -119,4 +139,4 @@ setData(data.filter((e:any)=>e.id!=id));
   );
 };
 
-export default AdminComponent;
+export default DeviceCollectorComponent;

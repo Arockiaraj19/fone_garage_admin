@@ -1,5 +1,4 @@
 "use client"
-import AdminComponent from "@/components/AdminComponents/admin_component";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import BrandComponent from "@/components/DeviceComponents/brand_component";
 import BrandModelComponent from "@/components/DeviceComponents/brand_model_component";
@@ -9,13 +8,11 @@ import Link from "next/link";
 import { usePathname } from 'next/navigation'
 
 
- 
-
 const Index= () => {
   const pathname = usePathname();
   return (
     <DefaultLayout>
-      <Breadcrumb  pageName="Admin Users" />
+      <Breadcrumb  pageName="Device Brand Model" />
       <div className="w-full flex flex-row justify-end my-4">
       <Link
               href={`${pathname}/add`}
@@ -24,7 +21,7 @@ const Index= () => {
              Add
             </Link>
       </div>
-      <AdminComponent/>
+      <BrandModelComponent/>
     </DefaultLayout>
   );
 };

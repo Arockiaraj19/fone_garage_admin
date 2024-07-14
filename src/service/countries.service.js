@@ -51,3 +51,8 @@ const deleteCountry = async (countryId) => {
     throw new Error('Failed to delete country');
   }
 };
+
+
+export {
+  deleteCountry,updateCountry,fetchCountries,addCountry
+}

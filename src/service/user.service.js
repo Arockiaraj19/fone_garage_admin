@@ -58,3 +58,7 @@ const deleteUser = async (userId) => {
     throw new Error('Failed to delete user');
   }
 };
+
+export {
+  addUser,fetchUsers, updateUser,deleteUser
+}

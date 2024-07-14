@@ -8,7 +8,7 @@ import { useState, useEffect } from "react";
 import { serverTimestamp } from 'firebase/firestore';
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-import { addCredentials, updateCredentials } from "@/service/credentials.service";
+import { addCountry,updateCountry } from "@/service/countries.service";
 
 const Add = () => {
     const searchParams = useSearchParams();
@@ -17,8 +17,7 @@ const router=useRouter();
     console.log("what is the path name",pathname);
     const formik = useFormik({
         initialValues: {
-            name: '',
-            password: ''
+            name: ''
 
         },
         validationSchema: Yup.object({
@@ -30,10 +29,20 @@ const router=useRouter();
 
             try {
                 if (searchParams.get("id")) {
-                    await updateCredentials(searchParams.get("id"),
-                    values.password    )
+                    await updateCountry(searchParams.get("id"),
+                        {
+                            name: values.name,
+
+                            updatedAt: serverTimestamp(),
+
+                        })
                 } else {
-                    await addCredentials(values.name,values.password)
+                    await addCountry({
+                        name: values.name,
+                       
+                        createdAt: serverTimestamp(),
+                        updatedAt: serverTimestamp(),
+                    })
                 }
                 router.back();
                 resetForm();
@@ -50,15 +59,14 @@ const router=useRouter();
 
         if (searchParams.get("id")) {
             formik.setValues({
-                name: searchParams.get("name") ?? "",
-                password:''
+                name: searchParams.get("name") ?? ""
             });
         }
     }, [])
 
     return (
         <DefaultLayout>
-            <Breadcrumb pageName={searchParams.get("id")?"Edit Admin":"Add Admin"} />
+            <Breadcrumb pageName={searchParams.get("id")?"Edit Country":"Add Country"} />
 
             <div className="grid grid-cols-1 gap-9 sm:grid-cols-2">
                 <div className="flex flex-col gap-9">
@@ -70,35 +78,16 @@ const router=useRouter();
                                 <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
                                     <div className="w-full">
                                         <label className="mb-3 block text-sm font-medium text-black dark:text-white">
-                                            Admin Mobile Number
+                                            Country Name
                                         </label>
                                         <input
-                                        readOnly={searchParams.get("id")?true:false}
                                             {...formik.getFieldProps('name')}
                                             type="text"
-                                            placeholder="Enter your Admin Mobile Number"
+                                            placeholder="Enter Country name"
                                             className="w-full rounded border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                                         />
                                         {formik.errors.name ? (
                                             <div className="text-sm text-black mt-2 ml-2">{formik.errors.name}</div>
-                                        ) : null}
-                                    </div>
-
-
-                                </div>
-                                <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
-                                    <div className="w-full">
-                                        <label className="mb-3 block text-sm font-medium text-black dark:text-white">
-                                            Admin Password
-                                        </label>
-                                        <input
-                                            {...formik.getFieldProps('password')}
-                                            type="text"
-                                            placeholder="Enter your Admin Password"
-                                            className="w-full rounded border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                                        />
-                                        {formik.errors.password ? (
-                                            <div className="text-sm text-black mt-2 ml-2">{formik.errors.password}</div>
                                         ) : null}
                                     </div>
 
