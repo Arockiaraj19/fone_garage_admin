@@ -54,12 +54,7 @@ setData(data.filter((e:any)=>e.id!=id));
               <th className="min-w-[220px] px-4 py-4 font-medium text-black dark:text-white xl:pl-11">
                 Name
               </th>
-              <th className="min-w-[220px] px-4 py-4 font-medium text-black dark:text-white xl:pl-11">
-               Email
-              </th>
-              <th className="min-w-[220px] px-4 py-4 font-medium text-black dark:text-white xl:pl-11">
-           Mobile
-              </th>
+              
               <th className="min-w-[150px] px-4 py-4 font-medium text-black dark:text-white">
                 Created date
               </th>
@@ -78,18 +73,7 @@ setData(data.filter((e:any)=>e.id!=id));
                   </h5>
 
                 </td>
-                <td className="border-b border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11">
-                  <h5 className="font-medium text-black dark:text-white">
-                    {item.email}
-                  </h5>
-
-                </td>
-                <td className="border-b border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11">
-                  <h5 className="font-medium text-black dark:text-white">
-                    {item.mobile}
-                  </h5>
-
-                </td>
+               
                 <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
                   <p className="text-black dark:text-white">
                     {moment(item.createdAt.toDate()).format('YYYY-MM-DD')}
