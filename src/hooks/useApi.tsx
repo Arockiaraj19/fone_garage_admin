@@ -1,5 +1,6 @@
 "use client"
 import { axiosPrivate } from '@/helper/axiosPrivate';
+import { baseUrl } from '@/helper/constants';
 
 import { useState, useEffect } from 'react';
 
