@@ -1,5 +1,7 @@
 "use client"
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
+import Breadcrumbs from "@/components/Breadcrumb";
+
 import BrandComponent from "@/components/DeviceComponents/brand_component";
 import BrandModelSizeComponent from "@/components/DeviceComponents/brand_model_size_component";
 
@@ -13,6 +15,7 @@ const Index= () => {
   return (
     <DefaultLayout>
       <Breadcrumb  pageName="Device Brand Model Size" />
+      <Breadcrumbs />
       <div className="w-full flex flex-row justify-end my-4">
       <Link
               href={`${pathname}/add`}
